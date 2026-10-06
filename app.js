@@ -112,7 +112,7 @@ function renderSearchResult(r) {
   $("rUpdated").textContent = valueOrDash(r.updatedAt);
   $("statusBadge").textContent = valueOrDash(r.status);
 
-  const isClosed = String(r.status || "").trim() === "รับของครบแล้ว ปิดงานแล้ว";
+  const isClosed = String(r.status || "").trim() === "รับของครบแล้ว";
   $("statusBadge").classList.toggle("status-closed", isClosed);
 }
 
