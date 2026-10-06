@@ -2,8 +2,8 @@
 // CONFIG - แก้ 2 ค่านี้เท่านั้น
 // =============================
 const CONFIG = {
-  API_URL: "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE",
-  API_TOKEN: "CHANGE_ME_TO_THE_SAME_TOKEN_AS_CODE_GS"
+  API_URL: "https://script.google.com/macros/s/AKfycbyNQvvylJ6NhycHjeFEoH0PogHJAb2uL_jWysslhLMkt0GsM6GWmUwgjwfk4dejjArBwA/exec",
+  API_TOKEN: "RiD_FINITY_2026_V1"
 };
 
 let currentSearchRecord = null;
