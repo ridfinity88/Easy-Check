@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>PR / PO Tracking Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div>
+          <div class="brand-title">TOR Easy Check</div>
+          <div class="brand-subtitle">Created by RiD FINITY</div>
+        </div>
+      </div>
+      <div class="connection-dot" id="connectionStatus" title="พร้อมใช้งาน"></div>
+    </header>
+
+    <nav class="nav-tabs" aria-label="เมนูหลัก">
+      <button class="nav-btn active search-theme" data-page="searchPage" id="navSearch">
+        <span class="nav-icon">⌕</span>
+        <span>ค้นหา</span>
+      </button>
+      <button class="nav-btn update-theme" data-page="updatePage" id="navUpdate">
+        <span class="nav-icon">↻</span>
+        <span>อัพเดท</span>
+      </button>
+      <button class="nav-btn copy-theme" data-page="copyPage" id="navCopy">
+        <span class="nav-icon">⧉</span>
+        <span>คัดลอก</span>
+      </button>
+    </nav>
+
+    <main>
+      <!-- SEARCH PAGE -->
+      <section id="searchPage" class="page active-page search-page">
+        <div class="hero-card search-hero">
+          <div class="eyebrow">SEARCH</div>
+          <h1>ค้นหาข้อมูล</h1>
+          <p>ค้นหาได้จากเลข PR, เลข PO หรือ Code</p>
+          <div class="search-box">
+            <input id="searchInput" type="text" placeholder="กรอกเลข PR / PO / Code" autocomplete="off" />
+            <button id="searchBtn" class="btn primary-btn">
+              <span>ค้นหา</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="searchEmpty" class="info-panel">
+          <div class="info-icon">⌕</div>
+          <div>
+            <strong>พร้อมค้นหาข้อมูล</strong>
+            <p>กรอกข้อมูลด้านบนแล้วกด “ค้นหา”</p>
+          </div>
+        </div>
+
+        <div id="searchResult" class="result-card hidden">
+          <div class="result-header">
+            <div>
+              <span id="resultCodeKicker" class="result-kicker">-</span>
+              <h2>รายละเอียดรายการ</h2>
+            </div>
+            <span id="statusBadge" class="status-badge">-</span>
+          </div>
+
+          <div class="detail-grid">
+            <div class="detail-item action-row">
+              <div>
+                <span class="label">เลข PR</span>
+                <strong id="rPr">-</strong>
+              </div>
+              <button class="mini-btn" data-copy-target="rPr">คัดลอก</button>
+            </div>
+            <div class="detail-item action-row">
+              <div>
+                <span class="label">เลข PO</span>
+                <strong id="rPo">-</strong>
+              </div>
+              <button class="mini-btn" data-copy-target="rPo">คัดลอก</button>
+            </div>
+            <div class="detail-item full">
+              <span class="label">ข้อมูล</span>
+              <div id="rData" class="multiline-value">-</div>
+            </div>
+            <div class="detail-item full action-row">
+              <div>
+                <span class="label">SUP. ที่ได้งาน</span>
+                <strong id="rSupplier">-</strong>
+              </div>
+              <button class="mini-btn" data-copy-target="rSupplier">คัดลอก</button>
+            </div>
+            <div class="detail-item full action-row">
+              <div>
+                <span class="label">เบอร์ติดต่อ</span>
+                <strong id="rPhone">-</strong>
+              </div>
+              <button class="mini-btn" data-copy-target="rPhone">คัดลอก</button>
+            </div>
+            <div class="detail-item full">
+              <span class="label">หมายเหตุ</span>
+              <div id="rRemark" class="multiline-value">-</div>
+            </div>
+            <div class="detail-item">
+              <span class="label">สถานะ</span>
+              <strong id="rStatus">-</strong>
+            </div>
+            <div class="detail-item">
+              <span class="label">วันที่อัพเดทข้อมูล</span>
+              <strong id="rUpdated">-</strong>
+            </div>
+          </div>
+
+          <div class="action-bar">
+            <button id="backBtn" class="btn secondary-btn">กลับ</button>
+            <button id="incompleteBtn" class="btn warning-btn">รับของไม่ครบ</button>
+            <button id="closeJobBtn" class="btn success-btn">ปิดงาน</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- UPDATE PAGE -->
+      <section id="updatePage" class="page update-page">
+        <div class="hero-card update-hero">
+          <div class="eyebrow">UPDATE</div>
+          <h1>อัพเดทข้อมูลด้วยเลข PR</h1>
+          <p>ค้นหาเลข PR ก่อนแก้ไขข้อมูล</p>
+          <div class="search-box">
+            <input id="updateSearchInput" type="text" placeholder="กรอกเลข PR" autocomplete="off" />
+            <button id="updateSearchBtn" class="btn update-btn">ค้นหา PR</button>
+          </div>
+        </div>
+
+        <div id="updateEmpty" class="info-panel">
+          <div class="info-icon">↻</div>
+          <div>
+            <strong>พร้อมอัพเดทข้อมูล</strong>
+            <p>กรอกเลข PR ด้านบนเพื่อเปิดแบบฟอร์ม</p>
+          </div>
+        </div>
+
+        <form id="updateForm" class="form-card hidden" novalidate>
+          <div class="form-heading">
+            <div>
+              <span class="result-kicker update-kicker">EDIT RECORD</span>
+              <h2>แก้ไขข้อมูล</h2>
+            </div>
+            <span id="editingPrPill" class="pr-pill">PR -</span>
+          </div>
+
+          <label class="field">
+            <span>เลข PO</span>
+            <input id="fPo" type="text" />
+          </label>
+
+          <label class="field">
+            <span>SUP. ที่ได้งาน</span>
+            <input id="fSupplier" type="text" />
+          </label>
+
+          <label class="field">
+            <span>เบอร์ติดต่อ</span>
+            <input id="fPhone" type="tel" inputmode="tel" />
+          </label>
+
+          <label class="field">
+            <span>หมายเหตุ</span>
+            <textarea id="fRemark" rows="4"></textarea>
+          </label>
+
+          <button type="submit" class="btn save-btn">บันทึกข้อมูล</button>
+        </form>
+      </section>
+
+      <!-- COPY PAGE -->
+      <section id="copyPage" class="page copy-page">
+        <div class="hero-card copy-hero">
+          <div class="eyebrow">COPY TOOL</div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <h1 style="margin-right:0;">คัดลอกข้อมูลหลายรายการ</h1>
+            <button id="promptLmTorBtn" type="button" class="mini-btn">Prompt LM TOR</button>
+          </div>
+          <p>วางข้อมูลแล้วกด “ดำเนินการ” </p>
+          <div class="copy-input-wrap">
+            <textarea id="bulkCopyInput" rows="8" placeholder="วางข้อมูลที่นี่"></textarea>
+            <button id="processCopyBtn" class="btn copy-action-btn">ดำเนินการ</button>
+          </div>
+        </div>
+
+        <div id="copyEmpty" class="info-panel">
+          <div class="info-icon copy-info-icon">⧉</div>
+          <div>
+            <strong>พร้อมรับข้อมูล</strong>
+            <p>ใส่ข้อมูลแล้วกด “ดำเนินการ”</p>
+          </div>
+        </div>
+
+        <div id="copyResultCard" class="copy-result-card hidden">
+          <div class="copy-result-heading">
+            <div>
+              <span class="result-kicker copy-kicker">COPY RESULT</span>
+              <h2>รายการสำหรับคัดลอก</h2>
+            </div>
+            <span id="copyCountPill" class="copy-count-pill">0 รายการ</span>
+          </div>
+          <div id="copyResultList" class="copy-result-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Incomplete modal -->
+  <div id="incompleteModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-heading">
+        <div>
+          <span class="result-kicker">REMARK</span>
+          <h3>รับของไม่ครบ</h3>
+        </div>
+        <button id="modalClose" class="icon-btn" aria-label="ปิด">×</button>
+      </div>
+      <label class="field">
+        <span>รายละเอียด</span>
+        <textarea id="incompleteRemark" rows="5" placeholder="ระบุรายละเอียดของที่รับไม่ครบ..."></textarea>
+      </label>
+      <div class="modal-actions">
+        <button id="modalCancel" class="btn secondary-btn">ยกเลิก</button>
+        <button id="modalSave" class="btn warning-btn">บันทึก</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Close job confirmation modal -->
+  <div id="closeJobModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-heading">
+        <div>
+          <span class="result-kicker">CONFIRM</span>
+          <h3>ยืนยันการปิดงานรายการนี้?</h3>
+        </div>
+        <button id="closeJobModalX" class="icon-btn" aria-label="ปิด">×</button>
+      </div>
+
+      <div class="info-panel" style="margin-top:0; box-shadow:none;">
+        <div class="info-icon">✓</div>
+        <div>
+          <strong>ปิดงานรายการนี้</strong>
+          <p>ระบบจะบันทึกสถานะเป็น “รับของครบแล้ว”</p>
+        </div>
+      </div>
+
+      <label id="closeJobPoField" class="field hidden" style="margin-top:16px;">
+        <span>เลข PO</span>
+        <input id="closeJobPoInput" type="text" placeholder="กรอกเลข PO" autocomplete="off" />
+      </label>
+
+      <div class="modal-actions" style="margin-top:16px;">
+        <button id="closeJobCancel" class="btn secondary-btn">ยกเลิก</button>
+        <button id="closeJobConfirm" class="btn success-btn">ยืนยันปิดงาน</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden" aria-live="polite"></div>
+
+  <!-- Loading -->
+  <div id="loading" class="loading-backdrop hidden" aria-live="assertive">
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <span>กำลังประมวลผล...</span>
+    </div>
+  </div>
+
+  <iframe id="apiFrame" name="apiFrame" class="api-frame" title="api"></iframe>
+
+  <script src="./app.js"></script>
+</body>
+</html>
